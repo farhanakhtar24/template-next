@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export function OPTIONS(): NextResponse<any> {
+export function OPTIONS() {
   const res = new NextResponse();
   res.headers.append("Access-Control-Allow-Origin", "*");
   res.headers.append("Content-Type", "application/json");

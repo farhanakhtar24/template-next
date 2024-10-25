@@ -92,7 +92,7 @@
     // POST request to your backend
     try {
       const response = await fetch(
-        "https://4e85-103-28-253-228.ngrok-free.app/api/generate",
+        "https://template-next-silk.vercel.app/api/generate",
         {
           method: "POST",
           headers: {
