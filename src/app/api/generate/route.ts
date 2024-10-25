@@ -31,8 +31,31 @@ export async function POST(request: NextRequest) {
 
     console.log(`The answer is: ${text}`);
 
-    return NextResponse.json({ text });
+    return NextResponse.json(
+      { text },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      },
+    );
   } catch (error) {
     console.log(`An error occurred: ${error}`);
   }
+}
+
+export function OPTIONS(): NextResponse<any> {
+  const res = new NextResponse();
+  res.headers.append("Access-Control-Allow-Origin", "*");
+  res.headers.append("Content-Type", "application/json");
+  res.headers.append("Allow", "GET,POST,OPTIONS");
+  res.headers.append("Access-Control-Allow-Methods", "GET,OPTIONS,POST");
+  res.headers.append(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Authorization, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+  );
+
+  return res;
 }

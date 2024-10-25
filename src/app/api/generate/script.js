@@ -91,17 +91,20 @@
 
     // POST request to your backend
     try {
-      const response = await fetch("http://localhost:3000/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://4e85-103-28-253-228.ngrok-free.app/api/generate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ websiteContent, question }),
         },
-        body: JSON.stringify({ websiteContent, question }),
-      });
+      );
 
       // Handle the response
       const data = await response.json();
-      const answer = data.answer || "Sorry, I couldn't find an answer.";
+      const answer = data.text || "Sorry, I couldn't find an answer.";
 
       // Display the answer in the chat
       addMessage(answer, "bot");
