@@ -2,7 +2,22 @@ import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { NextRequest, NextResponse } from "next/server";
 
+export async function OPTIONS() {
+  const response = NextResponse.next();
+  response.headers.set("Access-Control-Allow-Origin", "https://gethelium.co"); // Your frontend origin
+  response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+  return response;
+}
+
 export async function POST(request: NextRequest) {
+  const response = NextResponse.next();
+
+  // Set CORS headers
+  response.headers.set("Access-Control-Allow-Origin", "https://gethelium.co"); // Your frontend origin
+  response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+
   try {
     const { websiteContent, question } = await request.json();
     const { text } = await generateText({
@@ -34,5 +49,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ text });
   } catch (error) {
     console.log(`An error occurred: ${error}`);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
